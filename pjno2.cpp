@@ -19,7 +19,40 @@ void hienThiMenu() {
     printf("Nhập lựa chọn của bạn: ");
 }
 
-
+// Hàm xử lý lựa chọn
+void xuLyLuaChon(int luaChon) {
+    switch(luaChon) {
+        case 1:
+            printf(">> Chức năng Quản lý nhân viên đang được xử lý...\n");
+            break;
+        case 2:
+            printf(">> Chức năng Quản lý công việc đang được xử lý...\n");
+            break;
+        case 3:
+            printf(">> Chức năng Phân công công việc đang được xử lý...\n");
+            break;
+        case 4:
+            printf(">> Cập nhật tiến độ công việc đang được xử lý...\n");
+            break;
+        case 5:
+            printf(">> Xem báo cáo tiến độ...\n");
+            break;
+        case 6:
+            printf(">> Tìm kiếm công việc...\n");
+            break;
+        case 7:
+            printf(">> Lưu dữ liệu vào tệp...\n");
+            break;
+        case 8:
+            printf(">> Tải dữ liệu từ tệp...\n");
+            break;
+        case 0:
+            printf(">> Đang thoát chương trình...\n");
+            break;
+        default:
+            printf(">> Lựa chọn không hợp lệ! Vui lòng thử lại.\n");
+    }
+}
 
 int main(){
   
