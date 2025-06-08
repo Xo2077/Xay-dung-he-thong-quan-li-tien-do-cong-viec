@@ -1,10 +1,8 @@
-#include <sdtio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include"quan-li-nhan-vien.cpp"
 #include"quan-li-cong-viec.cpp"
-#include"xem-bao-cao-tien-do.cpp"
-#include"tim-kiem-cong-viec.cpp"
-
+#include"tai-du-lieu-tu-tep.cpp"
 // pjno2: Xây dựng ứng dụng cho hệ thống quản lí tiến độ công việc cho công ty
 
 // Hàm hiển thị menu
@@ -16,8 +14,7 @@ void hienThiMenu() {
     printf("4. Cập nhật tiến độ công việc\n");
     printf("5. Xem báo cáo tiến độ\n");
     printf("6. Tìm kiếm công việc\n");
-    printf("7. Lưu dữ liệu vào tệp\n");
-    printf("8. Tải dữ liệu từ tệp\n");
+    printf("7. Tải dữ liệu từ tệp\n");
     printf("0. Thoát chương trình\n");
     printf("====================================================================\n");
     printf("Nhập lựa chọn của bạn: ");
@@ -28,9 +25,11 @@ void xuLyLuaChon(int luaChon) {
     switch(luaChon) {
         case 1:
             printf(">> Chức năng Quản lý nhân viên đang được xử lý...\n");
+            quanLyNhanVien();
             break;
         case 2:
             printf(">> Chức năng Quản lý công việc đang được xử lý...\n");
+            quanLyCongViec();
             break;
         case 3:
             printf(">> Chức năng Phân công công việc đang được xử lý...\n");
@@ -45,10 +44,8 @@ void xuLyLuaChon(int luaChon) {
             printf(">> Tìm kiếm công việc...\n");
             break;
         case 7:
-            printf(">> Lưu dữ liệu vào tệp...\n");
-            break;
-        case 8:
             printf(">> Tải dữ liệu từ tệp...\n");
+            xuat_file();
             break;
         case 0:
             printf(">> Đang thoát chương trình...\n");
@@ -59,10 +56,11 @@ void xuLyLuaChon(int luaChon) {
 }
 
 int main(){
-  
-
-
-
-
-
+ int luaChon;
+    do {
+        hienThiMenu();
+        scanf("%d", &luaChon);
+        xuLyLuaChon(luaChon);
+    } while (luaChon != 0);
+    return 0;
 }
