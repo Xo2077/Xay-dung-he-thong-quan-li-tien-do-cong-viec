@@ -3,7 +3,8 @@
 #include"quan-li-nhan-vien.cpp"
 #include"quan-li-cong-viec.cpp"
 1111
-
+#include"xem-bao-cao-tien-do.cpp"
+#include"tim-kiem-cong-viec.cpp"
 
 // pjno2: Xây dựng ứng dụng cho hệ thống quản lí tiến độ công việc cho công ty
 
