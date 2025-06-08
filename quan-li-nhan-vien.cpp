@@ -28,9 +28,9 @@ void themNhanVien() {
     danhSachNhanVien[soLuongNhanVien++] = nv;
     printf(">> Ðã thêm nhân viên: %s, V? trí: %s\n", nv.ten, nv.viTri);
 }
-void luu(char *ten_file){
+void luu(){
 FILE *f;
-f=fopen(ten_file,"a");
+f=fopen("nv.txt","a");
  if (!f) {
         printf(">> Không th? m? file d? ghi!\n");
         return;
@@ -75,7 +75,6 @@ void xoaNhanVien() {
 
 void quanLyNhanVien() {
     int choice;
-    char ten_file[100];
     
     do {
         printf("\n--- QU?N LÝ NHÂN VIÊN ---\n");
@@ -97,10 +96,7 @@ void quanLyNhanVien() {
             xoaNhanVien();
             break;
             case 4: 
-            getchar();
-            fgets(ten_file,sizeof(ten_file),stdin);
-            ten_file[strcspn(ten_file,"\n")]='\0';
-            luu(ten_file);
+            luu();
             break;
         case 0:
             printf("Quay l?i menu chính...\n");
@@ -110,4 +106,3 @@ void quanLyNhanVien() {
         }
     } while (choice != 0);
 }
-
