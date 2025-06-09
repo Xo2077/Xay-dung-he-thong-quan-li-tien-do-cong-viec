@@ -1,7 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<
+#include"quan-li-nhan-vien.cpp"
+#include"quan-li-cong-viec.cpp"
 void phan_cong_cong_viec() {
     if (so_luong_cong_viec >= MAX_TASKS || so_luong_nhan_vien == 0) {
         printf("Không thể phân công! Danh sách đầy hoặc chưa có nhân viên.\n");
