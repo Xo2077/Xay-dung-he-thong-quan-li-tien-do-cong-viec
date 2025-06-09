@@ -3,6 +3,7 @@
 #include"quan-li-nhan-vien.cpp"
 #include"quan-li-cong-viec.cpp"
 #include"tai-du-lieu-tu-tep.cpp"
+#include"phan-cong-cong-viec.cpp"
 // pjno2: Xây dựng ứng dụng cho hệ thống quản lí tiến độ công việc cho công ty
 
 // Hàm hiển thị menu
@@ -33,6 +34,7 @@ void xuLyLuaChon(int luaChon) {
             break;
         case 3:
             printf(">> Chức năng Phân công công việc đang được xử lý...\n");
+             phan_cong_cong_viec();
             break;
         case 4:
             printf(">> Cập nhật tiến độ công việc đang được xử lý...\n");
