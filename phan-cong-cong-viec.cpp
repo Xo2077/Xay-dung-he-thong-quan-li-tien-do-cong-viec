@@ -11,7 +11,7 @@ void phan_cong_cong_viec() {
 
     printf("\n--- CÔNG VIỆC CHƯA GIAO ---\n");
     for (int i = 0; i < so_luong_cong_viec; i++) {
-        if (danh_sach_cong_viec[i].nguoi_phu_trach == -1) {
+        if ( danhSachCongViec[i].nguoi_phu_trach == -1) {
             printf("%d. %s\n", danh_sach_cong_viec[i].ma_so, danh_sach_cong_viec[i].mo_ta);
         }
     }
