@@ -1,53 +1,57 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include"quan-li-nhan-vien.cpp"
-#include"quan-li-cong-viec.cpp"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "quan-li-nhan-vien.cpp"
+#include "quan-li-cong-viec.cpp"
+
 void phan_cong_cong_viec() {
-    if (soLuongCongViec >= MAX_TASKS || so_luong_nhan_vien == 0) {
-        printf("Không thể phân công! Danh sách đầy hoặc chưa có nhân viên.\n");
+    if (soLuongCongViec == 0 || soLuongNhanVien == 0) {
+        printf("Không thể phân công! Chưa có công việc hoặc nhân viên.\n");
         return;
     }
 
-    printf("\n--- CÔNG VIỆC CHƯA GIAO ---\n");
-    for (int i = 0; i < so_luong_cong_viec; i++) {
-        if ( danhSachCongViec[i].nguoi_phu_trach == -1) {
-            printf("%d. %s\n", danh_sach_cong_viec[i].ma_so, danh_sach_cong_viec[i].mo_ta);
+    printf("\n--- DANH SÁCH CÔNG VIỆC CHƯA GIAO ---\n");
+    for (int i = 0; i < soLuongCongViec; i++) {
+        if (danhSachCongViec[i].trangThai == -1) { // Chưa hoàn thành = chưa giao
+            printf("ID: %d - %s\n", danhSachCongViec[i].id, danhSachCongViec[i].ten);
         }
     }
 
     printf("\n--- DANH SÁCH NHÂN VIÊN ---\n");
-    for (int i = 0; i < so_luong_nhan_vien; i++) {
-        printf("%d. %s\n", danh_sach_nhan_vien[i].ma_so, danh_sach_nhan_vien[i].ho_ten);
+    for (int i = 0; i < soLuongNhanVien; i++) {
+        printf("ID: %d - %s\n", danhSachNhanVien[i].id, danhSachNhanVien[i].ten);
     }
 
-    int ma_cong_viec, ma_nhan_vien;
-    printf("\nNhập mã công việc cần giao: ");
-    scanf("%d", &ma_cong_viec);
-    printf("Nhập mã nhân viên: ");
-    scanf("%d", &ma_nhan_vien);
+    int maCongViec, maNhanVien;
+    printf("\nNhập ID công việc cần giao: ");
+    scanf("%d", &maCongViec);
+    printf("Nhập ID nhân viên nhận công việc: ");
+    scanf("%d", &maNhanVien);
 
-    bool tim_thay_cv = false, tim_thay_nv = false;
-    
+    int timThayCV = 0, timThayNV = 0;
+
+    // Tìm công việc
     for (int i = 0; i < soLuongCongViec; i++) {
-        if (danh_sach_cong_viec[i].ma_so == ma_cong_viec) {
-            danh_sach_cong_viec[i].nguoi_phu_trach = ma_nhan_vien;
-            strcpy(danh_sach_cong_viec[i].trang_thai, "Chưa bắt đầu");
-            tim_thay_cv = true;
+        if (danhSachCongViec[i].id == maCongViec) {
+            timThayCV = 1;
+            // Gán trạng thái là "Đã hoàn thành" giả lập là "đã phân"
+            danhSachCongViec[i].trangThai = 1;
             break;
         }
     }
 
-    for (int i = 0; i < so_luong_nhan_vien; i++) {
-        if (danh_sach_nhan_vien[i].ma_so == ma_nhan_vien) {
-            tim_thay_nv = true;
+    // Tìm nhân viên
+    for (int i = 0; i < soLuongNhanVien; i++) {
+        if (danhSachNhanVien[i].id == maNhanVien) {
+            timThayNV = 1;
             break;
         }
     }
 
-    if (tim_thay_cv && tim_thay_nv) {
-        printf("Đã phân công thành công!\n");
+    if (timThayCV && timThayNV) {
+        printf(">> Đã phân công công việc thành công!\n");
     } else {
-        printf("Phân công thất bại! Kiểm tra lại mã số.\n");
+        printf(">> Phân công thất bại! Kiểm tra lại ID công việc hoặc ID nhân viên.\n");
     }
 }
