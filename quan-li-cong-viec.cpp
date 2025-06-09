@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,68 +8,78 @@ typedef struct {
     int id;
     char ten[50];
     char moTa[100];
-    int trangThai; //-1: Chưa giao ,0: Chua hoàn thành, 1: Ðã hoàn thành
+    int trangThai; // -1: Chưa có người phụ trách, 0: Chưa hoàn thành, 1: Đã hoàn thành
 } CongViec;
 
 CongViec danhSachCongViec[MAX_CONG_VIEC];
 int soLuongCongViec = 0;
 
-// --- Các ch?c nang qu?n lý công vi?c ---
 void themCongViec() {
     if (soLuongCongViec >= MAX_CONG_VIEC) {
-        printf(">> Danh sách công vi?c dã d?y!\n");
+        printf(">> Danh sách công việc đã đầy!\n");
         return;
     }
     CongViec cv;
     cv.id = soLuongCongViec + 1;
-    printf("Nh?p tên công vi?c: ");
+    printf("Nhập tên công việc: ");
     scanf(" %49[^\n]", cv.ten);
-    printf("Nh?p mô t? công vi?c: ");
+    printf("Nhập mô tả công việc: ");
     scanf(" %99[^\n]", cv.moTa);
-    cv.trangThai = 0; // M?c d?nh chua hoàn thành
+    cv.trangThai = -1; // Mặc định: chưa có người phụ trách
     danhSachCongViec[soLuongCongViec++] = cv;
-    printf(">> Ðã thêm công vi?c: %s\n", cv.ten);
+    printf(">> Đã thêm công việc: %s\n", cv.ten);
 }
 
 void hienThiCongViec() {
-    printf("\n--- Danh sách công vi?c ---\n");
+    printf("\n--- Danh sách công việc ---\n");
     if (soLuongCongViec == 0) {
-        printf("Chua có công vi?c nào.\n");
+        printf("Chưa có công việc nào.\n");
         return;
     }
+
     for (int i = 0; i < soLuongCongViec; i++) {
-        printf("ID: %d, Tên: %s, Mô t?: %s, Tr?ng thái: %s\n",
+        char* trangThaiStr;
+        if (danhSachCongViec[i].trangThai == -1)
+            trangThaiStr = "Chưa có người phụ trách";
+        else if (danhSachCongViec[i].trangThai == 0)
+            trangThaiStr = "Chưa hoàn thành";
+        else
+            trangThaiStr = "Đã hoàn thành";
+
+        printf("ID: %d, Tên: %s, Mô tả: %s, Trạng thái: %s\n",
                danhSachCongViec[i].id,
                danhSachCongViec[i].ten,
                danhSachCongViec[i].moTa,
-               danhSachCongViec[i].trangThai == 0 ? "Chua hoàn thành" : "Ðã hoàn thành");
+               trangThaiStr);
     }
 }
 
 void capNhatTrangThaiCongViec() {
     int id, trangThai;
-    printf("Nh?p ID công vi?c c?n c?p nh?t tr?ng thái: ");
+    printf("Nhập ID công việc cần cập nhật trạng thái: ");
     scanf("%d", &id);
-    printf("Nh?p tr?ng thái (0: Chua hoàn thành, 1: Ðã hoàn thành): ");
+    printf("Nhập trạng thái (0: Chưa hoàn thành, 1: Đã hoàn thành): ");
     scanf("%d", &trangThai);
     int found = 0;
+
     for (int i = 0; i < soLuongCongViec; i++) {
         if (danhSachCongViec[i].id == id) {
             danhSachCongViec[i].trangThai = (trangThai == 1) ? 1 : 0;
             found = 1;
-            printf(">> Ðã c?p nh?t tr?ng thái công vi?c ID %d\n", id);
+            printf(">> Đã cập nhật trạng thái công việc ID %d\n", id);
             break;
         }
     }
     if (!found)
-        printf(">> Không tìm th?y công vi?c v?i ID %d\n", id);
+        printf(">> Không tìm thấy công việc với ID %d\n", id);
 }
 
 void xoaCongViec() {
     int id;
-    printf("Nh?p ID công vi?c c?n xóa: ");
+    printf("Nhập ID công việc cần xóa: ");
     scanf("%d", &id);
     int found = 0;
+
     for (int i = 0; i < soLuongCongViec; i++) {
         if (danhSachCongViec[i].id == id) {
             found = 1;
@@ -78,63 +87,51 @@ void xoaCongViec() {
                 danhSachCongViec[j] = danhSachCongViec[j + 1];
             }
             soLuongCongViec--;
-            printf(">> Ðã xóa công vi?c ID %d\n", id);
+            printf(">> Đã xóa công việc ID %d\n", id);
             break;
         }
     }
     if (!found)
-        printf(">> Không tìm th?y công vi?c v?i ID %d\n", id);
-}
-void save_work(){
-	FILE *f;
-	f=fopen("cv.txt","w");
-	if (f == NULL) {
-    printf(">> Loi: Khong the mo file de ghi!\n");
-    return;
-}
-	for (int i = 0; i < soLuongCongViec; i++){
-		fprintf(f,"%d\n",danhSachCongViec[i].id);
-		fprintf(f,"%s\n",danhSachCongViec[i].ten);
-		fprintf(f,"%s\n",danhSachCongViec[i].moTa);
-		fprintf(f,"%d\n",danhSachCongViec[i].trangThai);
-	}
-	fclose(f);
+        printf(">> Không tìm thấy công việc với ID %d\n", id);
 }
 
+void save_work() {
+    FILE *f = fopen("cv.txt", "w");
+    if (f == NULL) {
+        printf(">> Lỗi: Không thể mở file để ghi!\n");
+        return;
+    }
+
+    for (int i = 0; i < soLuongCongViec; i++) {
+        fprintf(f, "%d\n", danhSachCongViec[i].id);
+        fprintf(f, "%s\n", danhSachCongViec[i].ten);
+        fprintf(f, "%s\n", danhSachCongViec[i].moTa);
+        fprintf(f, "%d\n", danhSachCongViec[i].trangThai);
+    }
+    fclose(f);
+    printf(">> Đã lưu công việc vào file cv.txt\n");
+}
 
 void quanLyCongViec() {
     int choice;
     do {
-        printf("\n--- QU?N LÝ CÔNG VI?C ---\n");
-        printf("1. Thêm công vi?c\n");
-        printf("2. Hi?n th? danh sách công vi?c\n");
-        printf("3. C?p nh?t tr?ng thái công vi?c\n");
-        printf("4. Xóa công vi?c\n");
-        printf("5. Luu cong viec vao file\n");
-        printf("0. Quay l?i menu chính\n");
-        printf("Ch?n ch?c nang: ");
+        printf("\n--- QUẢN LÝ CÔNG VIỆC ---\n");
+        printf("1. Thêm công việc\n");
+        printf("2. Hiển thị danh sách công việc\n");
+        printf("3. Cập nhật trạng thái công việc\n");
+        printf("4. Xóa công việc\n");
+        printf("5. Lưu công việc vào file\n");
+        printf("0. Quay lại menu chính\n");
+        printf("Chọn chức năng: ");
         scanf("%d", &choice);
         switch (choice) {
-            case 1:
-                themCongViec();
-                break;
-            case 2:
-                hienThiCongViec();
-                break;
-            case 3:
-                capNhatTrangThaiCongViec();
-                break;
-            case 4:
-                xoaCongViec();
-                break;
-            case 5:
-              save_work();
-              break;
-            case 0:
-                printf("Quay l?i menu chính...\n");
-                break;
-            default:
-                printf("L?a ch?n không h?p l?, vui lòng th? l?i.\n");
+            case 1: themCongViec(); break;
+            case 2: hienThiCongViec(); break;
+            case 3: capNhatTrangThaiCongViec(); break;
+            case 4: xoaCongViec(); break;
+            case 5: save_work(); break;
+            case 0: printf("Quay lại menu chính...\n"); break;
+            default: printf("Lựa chọn không hợp lệ, vui lòng thử lại.\n");
         }
     } while (choice != 0);
 }
