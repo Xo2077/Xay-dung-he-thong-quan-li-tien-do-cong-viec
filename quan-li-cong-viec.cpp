@@ -9,7 +9,7 @@ typedef struct {
     int id;
     char ten[50];
     char moTa[100];
-    int trangThai; // 0: Chua hoàn thành, 1: Ðã hoàn thành
+    int trangThai; //-1: Chưa giao ,0: Chua hoàn thành, 1: Ðã hoàn thành
 } CongViec;
 
 CongViec danhSachCongViec[MAX_CONG_VIEC];
