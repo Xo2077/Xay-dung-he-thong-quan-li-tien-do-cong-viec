@@ -4,7 +4,7 @@
 #include"quan-li-nhan-vien.cpp"
 #include"quan-li-cong-viec.cpp"
 void phan_cong_cong_viec() {
-    if (so_luong_cong_viec >= MAX_TASKS || so_luong_nhan_vien == 0) {
+    if (soLuongCongViec >= MAX_TASKS || so_luong_nhan_vien == 0) {
         printf("Không thể phân công! Danh sách đầy hoặc chưa có nhân viên.\n");
         return;
     }
@@ -29,7 +29,7 @@ void phan_cong_cong_viec() {
 
     bool tim_thay_cv = false, tim_thay_nv = false;
     
-    for (int i = 0; i < so_luong_cong_viec; i++) {
+    for (int i = 0; i < soLuongCongViec; i++) {
         if (danh_sach_cong_viec[i].ma_so == ma_cong_viec) {
             danh_sach_cong_viec[i].nguoi_phu_trach = ma_nhan_vien;
             strcpy(danh_sach_cong_viec[i].trang_thai, "Chưa bắt đầu");
