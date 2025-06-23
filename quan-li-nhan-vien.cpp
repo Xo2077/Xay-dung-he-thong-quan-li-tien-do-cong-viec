@@ -13,96 +13,89 @@ typedef struct {
 NhanVien danhSachNhanVien[MAX_NHAN_VIEN];
 int soLuongNhanVien = 0;
 
-// --- Các ch?c nang qu?n lý nhân viên ---
+// --- Cac chuc nang quan ly nhan vien ---
 void themNhanVien() {
     if (soLuongNhanVien >= MAX_NHAN_VIEN) {
-        printf(">> Danh sách nhân viên dã d?y!\n");
+        printf(">> Danh sach nhan vien da day!\n");
         return;
     }
     NhanVien nv;
     nv.id = soLuongNhanVien + 1;
-    printf("Nh?p tên nhân viên: ");
+    printf("Nhap ten nhan vien: ");
     scanf(" %49[^\n]", nv.ten);
-    printf("Nh?p v? trí: ");
+    printf("Nhap vi tri: ");
     scanf(" %49[^\n]", nv.viTri);
     danhSachNhanVien[soLuongNhanVien++] = nv;
-    printf(">> Ðã thêm nhân viên: %s, V? trí: %s\n", nv.ten, nv.viTri);
-}
-void luu(){
-FILE *f;
-f=fopen("nv.txt","a");
- if (!f) {
-        printf(">> Không th? m? file d? ghi!\n");
-        return;
-    }
-   for (int i= 0; i < soLuongNhanVien; i++) {
-   fprintf(f,"%s\n",danhSachNhanVien[i].ten);
-    fprintf(f,"%s\n",danhSachNhanVien[i].viTri);
-       fprintf(f,"%d\n",danhSachNhanVien[i].id);}
-       fclose(f);
+    printf(">> Da them nhan vien: %s, Vi tri: %s\n", nv.ten, nv.viTri);
 }
 
-void hienThiNhanVien() {
-    printf("\n--- Danh sách nhân viên ---\n");
-    if (soLuongNhanVien == 0) {
-        printf("Chua có nhân viên nào.\n");
+void luuNhanVien() {
+    FILE *f = fopen("nv.txt", "a");
+    if (!f) {
+        printf(">> Khong the mo file de ghi!\n");
         return;
     }
     for (int i = 0; i < soLuongNhanVien; i++) {
-        printf("ID: %d, Tên: %s, V? trí: %s\n", danhSachNhanVien[i].id, danhSachNhanVien[i].ten, danhSachNhanVien[i].viTri);
+        fprintf(f, "%s\n", danhSachNhanVien[i].ten);
+        fprintf(f, "%s\n", danhSachNhanVien[i].viTri);
+        fprintf(f, "%d\n", danhSachNhanVien[i].id);
+    }
+    fclose(f);
+    printf(">> Da luu danh sach nhan vien vao file nv.txt\n");
+}
+
+void hienThiNhanVien() {
+    printf("\n--- Danh sach nhan vien ---\n");
+    if (soLuongNhanVien == 0) {
+        printf("Chua co nhan vien nao.\n");
+        return;
+    }
+    for (int i = 0; i < soLuongNhanVien; i++) {
+        printf("ID: %d, Ten: %s, Vi tri: %s\n",
+               danhSachNhanVien[i].id,
+               danhSachNhanVien[i].ten,
+               danhSachNhanVien[i].viTri);
     }
 }
 
 void xoaNhanVien() {
     int id;
-    printf("Nh?p ID nhân viên c?n xóa: ");
+    printf("Nhap ID nhan vien can xoa: ");
     scanf("%d", &id);
-    int found = 0;
+    int timThay = 0;
     for (int i = 0; i < soLuongNhanVien; i++) {
         if (danhSachNhanVien[i].id == id) {
-            found = 1;
+            timThay = 1;
             for (int j = i; j < soLuongNhanVien - 1; j++) {
                 danhSachNhanVien[j] = danhSachNhanVien[j + 1];
             }
             soLuongNhanVien--;
-            printf(">> Ðã xóa nhân viên ID %d\n", id);
+            printf(">> Da xoa nhan vien ID %d\n", id);
             break;
         }
     }
-    if (!found)
-        printf(">> Không tìm th?y nhân viên v?i ID %d\n", id);
+    if (!timThay)
+        printf(">> Khong tim thay nhan vien voi ID %d\n", id);
 }
 
 void quanLyNhanVien() {
-    int choice;
-    
+    int luaChon;
     do {
-        printf("\n--- QU?N LÝ NHÂN VIÊN ---\n");
-        printf("1. Thêm nhân viên\n");
-        printf("2. Hi?n th? danh sách nhân viên\n");
-        printf("3. Xóa nhân viên\n");
-        printf("4. Luu vào danh sách \n");
-        printf("0. Quay l?i menu chính\n");
-        printf("Ch?n ch?c nang: ");
-        scanf("%d", &choice);
-        switch (choice) {
-        case 1:
-            themNhanVien();
-            break;
-        case 2:
-            hienThiNhanVien();
-            break;
-        case 3:
-            xoaNhanVien();
-            break;
-            case 4: 
-            luu();
-            break;
-        case 0:
-            printf("Quay l?i menu chính...\n");
-            break;
-        default:
-            printf("L?a ch?n không h?p l?, vui lòng th? l?i.\n");
+        printf("\n--- QUAN LY NHAN VIEN ---\n");
+        printf("1. Them nhan vien\n");
+        printf("2. Hien thi danh sach nhan vien\n");
+        printf("3. Xoa nhan vien\n");
+        printf("4. Luu vao file\n");
+        printf("0. Quay lai menu chinh\n");
+        printf("Chon chuc nang: ");
+        scanf("%d", &luaChon);
+        switch (luaChon) {
+            case 1: themNhanVien(); break;
+            case 2: hienThiNhanVien(); break;
+            case 3: xoaNhanVien(); break;
+            case 4: luuNhanVien(); break;
+            case 0: printf("Quay lai menu chinh...\n"); break;
+            default: printf("Lua chon khong hop le, vui long thu lai.\n");
         }
-    } while (choice != 0);
+    } while (luaChon != 0);
 }
